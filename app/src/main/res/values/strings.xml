@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">POHA</string>
+    <string name="email">Email</string>
+    <string name="registrace">Registrace</string>
+    <string name="userName">Uživatelské jméno</string>
+    <string name="heslo">Heslo</string>
+    <string name="register">Registrovat</string>
+    <string name="logIn">Přihlásit se</string>
+    <string name="logout">Odhlásit se</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_maps">MapsActivity</string>
+
+
+</resources>

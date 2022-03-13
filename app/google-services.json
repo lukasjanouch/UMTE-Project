@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "789366255755",
+    "project_id": "poha-946e4",
+    "storage_bucket": "poha-946e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789366255755:android:bcce0b02024654a7ee248e",
+        "android_client_info": {
+          "package_name": "com.example.poha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "789366255755-utm1jpdm8iiem6go2crvrqavgi00tggo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOpBR97nKjnIwvcsPYtyjrXc-g5gghu-I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "789366255755-utm1jpdm8iiem6go2crvrqavgi00tggo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

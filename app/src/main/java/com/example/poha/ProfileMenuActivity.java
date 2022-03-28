@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,7 +36,7 @@ public class ProfileMenuActivity extends AppCompatActivity {
         btnNewRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ProfileMenuActivity.this, MapsActivity.class));
+                startActivity(new Intent(ProfileMenuActivity.this, SensorActivity.class));
             }
         });
 
@@ -69,5 +70,8 @@ public class ProfileMenuActivity extends AppCompatActivity {
                 Toast.makeText(ProfileMenuActivity.this, "Něco se pokazilo.", Toast.LENGTH_LONG).show();
             }
         });
+    }
+    public void onBackPressed() {
+        Toast.makeText(ProfileMenuActivity.this, "Chcete-li se odhlásit, klepněte na tlačítko Odhlásít se.", Toast.LENGTH_LONG).show();
     }
 }

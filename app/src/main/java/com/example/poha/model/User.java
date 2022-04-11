@@ -1,8 +1,12 @@
-package com.example.poha;
+package com.example.poha.model;
+
+import java.util.List;
 
 public class User {
 
     private String userName, email;
+    private List<Record> records;
+
 
     public User() {
     }
@@ -26,5 +30,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Record> getRecords() {
+        return records;
+    }
+
+    public void setRecords(List<Record> records) {
+        this.records = records;
     }
 }

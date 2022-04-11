@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/tv_labellat"
         android:layout_width="90dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="10dp"
         android:text="Zěměpisná šířka:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,7 +21,7 @@
         android:id="@+id/tv_lat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="27dp"
         android:text="0.00"
         app:layout_constraintStart_toEndOf="@+id/tv_labellat"
         app:layout_constraintTop_toTopOf="parent" />
@@ -132,7 +133,7 @@
         android:id="@+id/sw_locationsupdates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="5dp"
         android:checked="true"
         android:minHeight="48dp"
         android:text="Updatovat polohu"
@@ -160,8 +161,6 @@
         android:id="@+id/tv_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:textAlignment="center"
         app:layout_constraintStart_toEndOf="@+id/tv_lbladdress"
         app:layout_constraintTop_toTopOf="@+id/tv_lbladdress" />
 
@@ -178,10 +177,65 @@
         android:id="@+id/divider"
         android:layout_width="409dp"
         android:layout_height="1dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="10dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_address" />
+
+    <TextView
+        android:id="@+id/tv_lbl_waypoints"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Ukazatelé:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sensor" />
+    <TextView
+        android:id="@+id/tv_countOfWaypoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintStart_toEndOf="@+id/tv_lbl_waypoints"
+        app:layout_constraintTop_toTopOf="@+id/tv_lbl_waypoints" />
+
+    <Button
+        android:id="@+id/btn_measure_distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Měřit vzdálenost od počátku"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_lbl_waypoints" />
+    <Button
+        android:id="@+id/btn_new_waypoint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Uložit nový ukazatel"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_measure_distance" />
+    <Button
+        android:id="@+id/btn_waypoints_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seznam ukazatelů"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_new_waypoint" />
+
+    <Button
+        android:id="@+id/btn_showmap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mapa"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_waypoints_list" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Toast.makeText(MainActivity.this, "Ověřte svůj účet kliknutím na odkaz v emailu.", Toast.LENGTH_LONG).show();
                     }
                 }else{
-                    Toast.makeText(MainActivity.this,"Nepodařilo se vás přihlásit, zkontrolujte si prosím své přihlašovací údaje.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this,"Nepodařilo se vás přihlásit, zkontrolujte si prosím své přihlašovací údaje a připojení k internetu.", Toast.LENGTH_LONG).show();
                 }
             }
         });

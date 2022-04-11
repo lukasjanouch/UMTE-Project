@@ -12,6 +12,11 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_activity_maps2">MapsActivity2</string>
+    <string name="not_tracking_location">Poloha není sledována.</string>
+    <string name="o_km">"0.00 km"</string>
+    <string name="m">" m"</string>
+    <string name="m_s">" m/s"</string>
 
 
 </resources>

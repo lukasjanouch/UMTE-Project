@@ -8,9 +8,14 @@
         <entry key="..\:/Android-Studio/projects/POHA/app/src/main/res/layout/activity_main.xml" value="0.21331521739130435" />
         <entry key="..\:/Android-Studio/projects/POHA/app/src/main/res/layout/activity_main2.xml" value="0.25416666666666665" />
         <entry key="..\:/Android-Studio/projects/POHA/app/src/main/res/layout/activity_maps.xml" value="0.24010416666666667" />
+        <entry key="..\:/Android-Studio/projects/POHA/app/src/main/res/layout/activity_maps2.xml" value="0.13958333333333334" />
+        <entry key="..\:/Android-Studio/projects/POHA/app/src/main/res/layout/activity_my_results.xml" value="0.25416666666666665" />
         <entry key="..\:/Android-Studio/projects/POHA/app/src/main/res/layout/activity_profile_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Android-Studio/projects/POHA/app/src/main/res/layout/activity_register_user.xml" value="0.21331521739130435" />
         <entry key="..\:/Android-Studio/projects/POHA/app/src/main/res/layout/activity_sensor.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android-Studio/projects/POHA/app/src/main/res/layout/activity_sensor2.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android-Studio/projects/POHA/app/src/main/res/layout/activity_show_saved_locations_list.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android-Studio/projects/POHA/app/src/main/res/layout/item_my_results.xml" value="0.25416666666666665" />
         <entry key="..\:/Android-Studio/projects/POHA/app/src/main/res/menu/bottom_nav_menu.xml" value="0.24010416666666667" />
       </map>
     </option>

@@ -1,4 +1,4 @@
-package com.example.poha;
+package com.example.poha.unused;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -8,6 +8,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -15,9 +16,11 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.poha.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -32,8 +35,9 @@ public class SensorActivity extends AppCompatActivity {
     public static final int DEFAULT_UPDATE_INTERVAL = 30;
     public static final int FASTEST_UPDATE_INTERVAL = 5;
     private static final int PERMISSIONS_FINE_LOCATION = 99;
-    private TextView tvLat, tvLon, tvAltitude, tvAccuracy, tvSpeed, tvSensor, tvUpdates, tvAddress;
+    private TextView tvLat, tvLon, tvAltitude, tvAccuracy, tvSpeed, tvSensor, tvUpdates, tvAddress, tvWayPointsCount;
     private SwitchCompat swLocationupdates, swGps;
+    private Button btnNewWayPoint, btnWayPointsList, btnShowMap;
     //Google's API for location services
     private FusedLocationProviderClient fusedLocationProviderClient;
     //if we are tracking location or not
@@ -41,6 +45,9 @@ public class SensorActivity extends AppCompatActivity {
     //Location request is a config file for all settings related to FusedLocationProviderClient
     private LocationRequest locationRequest;
     private LocationCallback locationCallBack;
+
+    private Location currentLocation;
+    private List<Location> savedLocation;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -56,13 +63,18 @@ public class SensorActivity extends AppCompatActivity {
         tvSensor = findViewById(R.id.tv_sensor);
         tvUpdates = findViewById(R.id.tv_updates);
         tvAddress = findViewById(R.id.tv_address);
+        tvWayPointsCount = findViewById(R.id.tv_countOfWaypoints);
 
         swLocationupdates = findViewById(R.id.sw_locationsupdates);
         swGps = findViewById(R.id.sw_gps);
 
+        btnNewWayPoint = findViewById(R.id.btn_new_waypoint);
+        btnWayPointsList = findViewById(R.id.btn_waypoints_list);
+        btnShowMap = findViewById(R.id.btn_showmap);
+
         locationRequest = new LocationRequest();
         //set all properties of Location Request
-        locationRequest.setInterval(30000);
+        locationRequest.setInterval(1000 * DEFAULT_UPDATE_INTERVAL);
         locationRequest.setFastestInterval(1000 * FASTEST_UPDATE_INTERVAL);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
@@ -102,6 +114,31 @@ public class SensorActivity extends AppCompatActivity {
             }
         });
 
+        btnNewWayPoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                MyApplication myApplication = (MyApplication) getApplicationContext();
+                savedLocation = myApplication.getMyLocations();
+                savedLocation.add(currentLocation);
+            }
+        });
+        btnWayPointsList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(SensorActivity.this, ShowSavedLocationsListActivity.class);
+                startActivity(i);
+            }
+        });
+        btnShowMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(SensorActivity.this, MapsActivity2.class);
+                startActivity(i);
+
+            }
+        });
+
         updateGps();
     }
 
@@ -114,14 +151,14 @@ public class SensorActivity extends AppCompatActivity {
     }
 
     private void stopLocationUpdates() {
-        tvUpdates.setText("Poloha není sledována.");
-        tvLat.setText("Poloha není sledována.");
-        tvLon.setText("Poloha není sledována.");
-        tvSpeed.setText("Poloha není sledována.");
-        tvAddress.setText("Poloha není sledována.");
-        tvAccuracy.setText("Poloha není sledována.");
-        tvAltitude.setText("Poloha není sledována.");
-        tvSensor.setText("Poloha není sledována.");
+        tvUpdates.setText(getString(R.string.not_tracking_location));
+        tvLat.setText(R.string.not_tracking_location);
+        tvLon.setText(R.string.not_tracking_location);
+        tvSpeed.setText(R.string.not_tracking_location);
+        tvAddress.setText(R.string.not_tracking_location);
+        tvAccuracy.setText(R.string.not_tracking_location);
+        tvAltitude.setText(R.string.not_tracking_location);
+        tvSensor.setText(R.string.not_tracking_location);
 
         fusedLocationProviderClient.removeLocationUpdates(locationCallBack);
     }
@@ -151,7 +188,9 @@ public class SensorActivity extends AppCompatActivity {
             fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
+
                     updateUIValues(location);
+                    currentLocation = location;
                 }
             });
         }else{
@@ -183,5 +222,9 @@ public class SensorActivity extends AppCompatActivity {
         }catch (Exception e){
             tvAddress.setText("Adresu nelze získat.");
         }
+        MyApplication myApplication = (MyApplication) getApplicationContext();
+        savedLocation = myApplication.getMyLocations();
+
+        tvWayPointsCount.setText(Integer.toString(savedLocation.size()));
     }
 }

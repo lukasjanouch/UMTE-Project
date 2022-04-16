@@ -24,7 +24,7 @@ public class ProfileMenuActivity extends AppCompatActivity {
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
-    private Button btnNewRun, btnMyResults, btnUsersResult, btnLogout;
+    private Button btnNewRun, btnMyResults, btnStandings, btnLogout;
 
 
     @Override
@@ -32,7 +32,7 @@ public class ProfileMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_menu);
 
-        btnNewRun = findViewById(R.id.button3);
+        btnNewRun = findViewById(R.id.btn_new_run);
         btnNewRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,7 +40,23 @@ public class ProfileMenuActivity extends AppCompatActivity {
             }
         });
 
-        btnLogout = (Button) findViewById(R.id.button5);
+        btnMyResults = findViewById(R.id.btn_my_results);
+        btnMyResults.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ProfileMenuActivity.this, MyResultsActivity.class));
+            }
+        });
+
+        btnStandings = findViewById(R.id.btn_standings);
+        btnStandings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ProfileMenuActivity.this, StandingsActivity.class));
+            }
+        });
+
+        btnLogout = (Button) findViewById(R.id.btn_logout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

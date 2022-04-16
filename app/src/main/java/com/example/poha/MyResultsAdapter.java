@@ -1,5 +1,6 @@
 package com.example.poha;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,10 @@ import java.util.List;
 public class MyResultsAdapter extends RecyclerView.Adapter<MyResultsAdapter.ViewHolder>{
     private List<Record> list;
 
+
     public MyResultsAdapter(List<Record> list){
         this.list = list;
+
     }
 
     @NonNull
@@ -33,8 +36,8 @@ public class MyResultsAdapter extends RecyclerView.Adapter<MyResultsAdapter.View
         holder.tvTime.setText(String.format("%02d", list.get(position).getTime().getMin()) + ":" +
                               String.format("%02d", list.get(position).getTime().getSec()) + ":" +
                               String.format("%02d", list.get(position).getTime().getMillisec()));
-        holder.tvDistance.setText(String.valueOf(list.get(position).getDistance()) + R.string.m);
-        holder.tvAvgSpeed.setText(String.valueOf(list.get(position).getSpeed()) + R.string.m_s);
+        holder.tvDistance.setText(String.valueOf(list.get(position).getDistance()) + " km");
+        holder.tvAvgSpeed.setText(String.valueOf(list.get(position).getSpeed()) + " m/s");
     }
 
     //String.format("%02d", min) + ":" + String.format("%02d", sec) + ":" +

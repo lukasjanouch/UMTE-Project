@@ -26,7 +26,9 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -108,14 +110,15 @@ public class SensorActivity2 extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
-                //gps - vzdálenost
-                getStartLocation();
-                startLocationUpdates();
                 if(!isResume){
+                    //gps - vzdálenost
+                    getStartLocation();
+                    startLocationUpdates();
                     //čas
                     tStart = SystemClock.uptimeMillis();
                     handler.postDelayed(runnable, 0);
                     chronometer.start();
+
                     isResume = true;
                     btnStop.setVisibility(View.GONE);
                     btnStart.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_pause_24));
@@ -146,7 +149,12 @@ public class SensorActivity2 extends AppCompatActivity {
                     double avgSpeed = (distance1 * 1000) / timeInSec;
                     record = new Record(distance1, time, avgSpeed);
                     DatabaseReference newRecordRef = recordsRef.push();
-                    newRecordRef.setValue(record);
+                    newRecordRef.setValue(record).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(getApplicationContext(), "Záznam byl úspěšně nahrán do databáze", Toast.LENGTH_LONG).show();
+                        }
+                    });
                     // We can also chain the two calls together
                     //recordsRef.push().setValueAsync(record);
                     tMillisec = 0L;

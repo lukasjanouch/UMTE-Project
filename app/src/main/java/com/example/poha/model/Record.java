@@ -5,6 +5,9 @@ public class Record {
     private double speed;
     private Time time;
 
+    public Record() {
+    }
+
     public Record(double distance, Time time, double speed) {
         this.distance = distance;
         this.time = time;

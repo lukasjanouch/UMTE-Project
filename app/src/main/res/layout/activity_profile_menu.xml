@@ -18,7 +18,18 @@
         app:layout_constraintVertical_bias="0.064" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_new_run"
+        android:layout_width="167dp"
+        android:layout_height="85dp"
+        android:text="Nový záznam"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.192" />
+
+    <Button
+        android:id="@+id/btn_my_results"
         android:layout_width="190dp"
         android:layout_height="85dp"
         android:text="Moje výsledky"
@@ -30,18 +41,7 @@
         app:layout_constraintVertical_bias="0.397" />
 
     <Button
-        android:id="@+id/button3"
-        android:layout_width="167dp"
-        android:layout_height="85dp"
-        android:text="Nový záznam"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.192" />
-
-    <Button
-        android:id="@+id/button4"
+        android:id="@+id/btn_standings"
         android:layout_width="146dp"
         android:layout_height="85dp"
         android:text="Žebříček"
@@ -53,7 +53,7 @@
         app:layout_constraintVertical_bias="0.597" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btn_logout"
         android:layout_width="149dp"
         android:layout_height="85dp"
         android:text="@string/logout"

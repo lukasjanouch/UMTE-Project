@@ -3,6 +3,9 @@ package com.example.poha.model;
 public class Time {
     private int min, sec, millisec;
 
+    public Time() {
+    }
+
     public Time(int min, int sec, int millisec) {
         this.min = min;
         this.sec = sec;

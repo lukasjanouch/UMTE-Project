@@ -32,7 +32,8 @@
                     android:text="1:03:45"
                     android:textStyle="bold"
                     android:textSize="22sp"
-                    android:layout_marginHorizontal="35dp"
+                    android:layout_marginRight="35dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_gravity="center_vertical"/>
 
                 <TextView
@@ -53,7 +54,7 @@
                     android:textAlignment="center"
                     android:textSize="22sp"
                     android:textStyle="bold"
-                    android:layout_marginHorizontal="35dp"
+                    android:layout_marginLeft="30dp"
                     android:layout_gravity="center_vertical"/>
 
 

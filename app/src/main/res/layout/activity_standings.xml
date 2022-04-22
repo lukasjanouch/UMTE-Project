@@ -7,11 +7,12 @@
     tools:context=".StandingsActivity">
 
     <TextView
-        android:id="@+id/textViewStandings"
+        android:id="@+id/tv_standings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Žebříček"
         android:textSize="30sp"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,11 +24,11 @@
         android:background="#FF5722"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewStandings"
+        app:layout_constraintTop_toBottomOf="@id/tv_standings"
         app:layout_constraintWidth_percent="0.6" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rec_MyResults"
+        android:id="@+id/rec_standings"
         android:layout_width="match_parent"
         android:layout_height="600dp"
         app:layout_constraintEnd_toEndOf="parent"

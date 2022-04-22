@@ -1,6 +1,5 @@
-package com.example.poha;
+package com.example.poha.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +8,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.poha.R;
 import com.example.poha.model.Record;
+import com.example.poha.model.RecordUser;
 
 import java.util.List;
 
-public class MyResultsAdapter extends RecyclerView.Adapter<MyResultsAdapter.ViewHolder>{
-    private List<Record> list;
+public class StandingsAdapter extends RecyclerView.Adapter<StandingsAdapter.ViewHolder>{
+    private List<RecordUser> list;
 
 
-    public MyResultsAdapter(List<Record> list){
+    public StandingsAdapter(List<RecordUser> list){
         this.list = list;
 
     }
@@ -25,7 +26,7 @@ public class MyResultsAdapter extends RecyclerView.Adapter<MyResultsAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_results, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_standings, parent, false));
     }
 
     @Override
@@ -33,9 +34,10 @@ public class MyResultsAdapter extends RecyclerView.Adapter<MyResultsAdapter.View
         /*int min = list.get(position).getTime().getMin();
         int sec = list.get(position).getTime().getSec();
         int millisec = list.get(position).getTime().getMillisec();*/
+        holder.tvUsername.setText(list.get(position).getUsername());
         holder.tvTime.setText(String.format("%02d", list.get(position).getTime().getMin()) + ":" +
-                              String.format("%02d", list.get(position).getTime().getSec()) + ":" +
-                              String.format("%02d", list.get(position).getTime().getMillisec()));
+                String.format("%02d", list.get(position).getTime().getSec()) + ":" +
+                String.format("%02d", list.get(position).getTime().getMillisec()));
         holder.tvDistance.setText(String.valueOf(list.get(position).getDistance()) + " km");
         holder.tvAvgSpeed.setText(String.valueOf(list.get(position).getSpeed()) + " m/s");
     }
@@ -49,12 +51,14 @@ public class MyResultsAdapter extends RecyclerView.Adapter<MyResultsAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTime, tvDistance, tvAvgSpeed;
+        TextView tvUsername, tvTime, tvDistance, tvAvgSpeed;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvTime = itemView.findViewById(R.id.text_time);
-            tvDistance = itemView.findViewById(R.id.text_distance);
-            tvAvgSpeed = itemView.findViewById(R.id.text_avg_speed);
+            tvUsername = itemView.findViewById(R.id.tv_st_username);
+            tvTime = itemView.findViewById(R.id.tv_st_time);
+            tvDistance = itemView.findViewById(R.id.tv_st_distance);
+            tvAvgSpeed = itemView.findViewById(R.id.tv_st_avg_speed);
         }
     }
 }
+

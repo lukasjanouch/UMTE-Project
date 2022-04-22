@@ -5,13 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.example.poha.adapter.MyResultsAdapter;
 import com.example.poha.model.Record;
-import com.example.poha.model.Time;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

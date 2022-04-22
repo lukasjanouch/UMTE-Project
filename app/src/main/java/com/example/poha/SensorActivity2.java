@@ -20,7 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.poha.model.Record;
+import com.example.poha.model.RecordUser;
 import com.example.poha.model.Time;
+import com.example.poha.model.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -31,10 +33,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import org.apache.commons.math3.util.Precision;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class SensorActivity2 extends AppCompatActivity {
     private static final int PERMISSIONS_FINE_LOCATION = 99;
@@ -59,11 +69,17 @@ public class SensorActivity2 extends AppCompatActivity {
     //Firebase
     private FirebaseUser user;
     private FirebaseDatabase rootNode;
+    private DatabaseReference recordsInUserRef;
+    private DatabaseReference usersRef;
     private DatabaseReference recordsRef;
+    private Query recordsQuery;
     private String userID;
 
     private Time time;
     private Record record;
+    private RecordUser recordUser;
+    private String username;
+    private List<RecordUser> listRecUs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,13 +119,48 @@ public class SensorActivity2 extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         rootNode = FirebaseDatabase.getInstance();
         userID = user.getUid();
-        recordsRef = rootNode.getReference("Users/" + userID + "/Records");
+        recordsInUserRef = rootNode.getReference("Users/" + userID + "/Records");
+        usersRef = rootNode.getReference("Users");
+        recordsRef = rootNode.getReference("Records");
+        recordsQuery = recordsRef.orderByChild("speed");
+
+        /*recordsQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dss: snapshot.getChildren()){
+                    RecordUser recordUser = dss.getValue(RecordUser.class);
+                    listRecUs.add(recordUser);
+                }
+                Collections.sort(listRecUs, (p1, p2) -> p1.getUsername().compareTo(p2.getUsername()));
+                Collections.reverse(listRecUs);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(), "Načtení záznamů z databáze selhalo.", Toast.LENGTH_SHORT).show();
+            }
+        });*/
+        //získání uživatelského jména přihlášeného uživatele
+        usersRef.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User userProfile = snapshot.getValue(User.class);
+                if(userProfile != null){
+                    username = userProfile.getUserName();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(SensorActivity2.this,
+                        "Pro vytvoření záznamu se nepodařilo se zjistit vaše uživatelské jméno.", Toast.LENGTH_LONG).show();
+            }
+        });
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("UseCompatLoadingForDrawables")
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
+
                 if(!isResume){
                     //gps - vzdálenost
                     getStartLocation();
@@ -143,13 +194,15 @@ public class SensorActivity2 extends AppCompatActivity {
                 //čas
                 if(!isResume){
                     btnStart.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_play_arrow_24));
-                    //výpočet průměrné rychlosti a uložení záznamu (record) do databáze
+                    //výpočet průměrné rychlosti a uložení záznamu (record) pro aktivitu MyResults do databáze
                     time = new Time(min, sec, millisec);
                     int timeInSec = (millisec / 1000) + sec + (min * 60);
                     double avgSpeed = (distance1 * 1000) / timeInSec;
+                    avgSpeed = Precision.round(avgSpeed, 3);
+                    //avgSpeed = 1.1;
                     record = new Record(distance1, time, avgSpeed);
-                    DatabaseReference newRecordRef = recordsRef.push();
-                    newRecordRef.setValue(record).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    DatabaseReference newRecordInUserRef = recordsInUserRef.push();
+                    newRecordInUserRef.setValue(record).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             Toast.makeText(getApplicationContext(), "Záznam byl úspěšně nahrán do databáze", Toast.LENGTH_LONG).show();
@@ -157,6 +210,35 @@ public class SensorActivity2 extends AppCompatActivity {
                     });
                     // We can also chain the two calls together
                     //recordsRef.push().setValueAsync(record);
+                    //Záznam pro aktivitu Standings
+                    recordUser = new RecordUser(username, distance1, time, avgSpeed);
+
+                    recordsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                                RecordUser recordUserLoc = snapshot.getValue(RecordUser.class);
+                                //jestliže je rychlost záznamu v databázi MENŠÍ nebo ROVNA, záznam se nahradí novým
+                                if(recordUserLoc.getUsername() != null && recordUserLoc.getUsername().equals(username)
+                                        && recordUserLoc.getSpeed() <= recordUser.getSpeed()){
+                                    snapshot.getRef().removeValue();
+                                    snapshot.getRef().setValue(recordUser);
+                                }}}
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    Toast.makeText(getApplicationContext(), "Načtení záznamů z databáze selhalo.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+/*
+                    DatabaseReference newRecordsRef = recordsRef.push();
+                    newRecordsRef.setValue(recordUser).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(getApplicationContext(), "Záznam byl úspěšně nahrán do databáze", Toast.LENGTH_LONG).show();
+                        }
+                    });*/
+
                     tMillisec = 0L;
                     tStart = 0L;
                     tBuff = 0L;
@@ -246,7 +328,8 @@ public class SensorActivity2 extends AppCompatActivity {
         //zaokrouhlení na 3 des. místa
         distance1 = Precision.round(distance1, 3);
         distance2 = Precision.round(distance2, 3);
-        tvDistance1.setText(String.valueOf(distance1) + " km");
+        String distance = String.valueOf(distance1);
+        tvDistance1.setText(distance + " km");
         tvDistance2.setText(String.valueOf(distance2) + " km");
     }
     @RequiresApi(api = Build.VERSION_CODES.M)

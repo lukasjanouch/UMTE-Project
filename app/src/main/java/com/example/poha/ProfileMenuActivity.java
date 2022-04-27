@@ -36,7 +36,7 @@ public class ProfileMenuActivity extends AppCompatActivity {
         btnNewRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ProfileMenuActivity.this, SensorActivity2.class));
+                startActivity(new Intent(ProfileMenuActivity.this, SensorActivity.class));
             }
         });
 

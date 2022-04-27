@@ -42,11 +42,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.apache.commons.math3.util.Precision;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class SensorActivity2 extends AppCompatActivity {
+public class SensorActivity extends AppCompatActivity {
     private static final int PERMISSIONS_FINE_LOCATION = 99;
     private static final int DEFAULT_UPDATE_INTERVAL = 30;
     private static final int FASTEST_UPDATE_INTERVAL = 5;
@@ -150,7 +148,7 @@ public class SensorActivity2 extends AppCompatActivity {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(SensorActivity2.this,
+                Toast.makeText(SensorActivity.this,
                         "Pro vytvoření záznamu se nepodařilo se zjistit vaše uživatelské jméno.", Toast.LENGTH_LONG).show();
             }
         });
@@ -277,7 +275,7 @@ public class SensorActivity2 extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void getStartLocation(){
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(SensorActivity2.this);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(SensorActivity.this);
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             //user provided the permission
             fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
@@ -296,7 +294,7 @@ public class SensorActivity2 extends AppCompatActivity {
     }
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void getDistanceFromStart(){
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(SensorActivity2.this);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(SensorActivity.this);
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             //user provided the permission
             fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {

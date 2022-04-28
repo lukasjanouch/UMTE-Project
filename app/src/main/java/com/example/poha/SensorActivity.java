@@ -49,7 +49,7 @@ public class SensorActivity extends AppCompatActivity {
     private static final int DEFAULT_UPDATE_INTERVAL = 30;
     private static final int FASTEST_UPDATE_INTERVAL = 5;
 
-    private TextView tvStartLat, tvStartLon, tvDistance1, tvDistance2, tvCurrentLat, tvCurrentLon, tvTime;
+    private TextView tvStartLat, tvStartLon, tvDistance, tvCurrentLat, tvCurrentLon;
     private ImageButton btnStart, btnStop;
     //GPS
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -57,7 +57,7 @@ public class SensorActivity extends AppCompatActivity {
     private LocationCallback locationCallBack;
     private Location startLocation;
     private Location currentLocation;
-    private double distance1, distance2;
+    private double distance, newDistance;
     //Čas
     private Chronometer chronometer;
     private Handler handler;
@@ -82,14 +82,13 @@ public class SensorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sensor2);
+        setContentView(R.layout.activity_sensor);
 
         tvStartLat = findViewById(R.id.tv_lat2);
         tvStartLon = findViewById(R.id.tv_lon2);
         tvCurrentLat = findViewById(R.id.tv_lat_current);
         tvCurrentLon = findViewById(R.id.tv_lon_current);
-        tvDistance1 = findViewById(R.id.tv_distance1);
-        tvDistance2 =findViewById(R.id.tv_distance2);
+        tvDistance = findViewById(R.id.tv_distance);
 
         chronometer = findViewById(R.id.chronometer);
 
@@ -122,21 +121,6 @@ public class SensorActivity extends AppCompatActivity {
         recordsRef = rootNode.getReference("Records");
         recordsQuery = recordsRef.orderByChild("speed");
 
-        /*recordsQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dss: snapshot.getChildren()){
-                    RecordUser recordUser = dss.getValue(RecordUser.class);
-                    listRecUs.add(recordUser);
-                }
-                Collections.sort(listRecUs, (p1, p2) -> p1.getUsername().compareTo(p2.getUsername()));
-                Collections.reverse(listRecUs);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "Načtení záznamů z databáze selhalo.", Toast.LENGTH_SHORT).show();
-            }
-        });*/
         //získání uživatelského jména přihlášeného uživatele
         usersRef.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -195,10 +179,10 @@ public class SensorActivity extends AppCompatActivity {
                     //výpočet průměrné rychlosti a uložení záznamu (record) pro aktivitu MyResults do databáze
                     time = new Time(min, sec, millisec);
                     int timeInSec = (millisec / 1000) + sec + (min * 60);
-                    double avgSpeed = (distance1 * 1000) / timeInSec;
+                    double avgSpeed = (distance * 1000) / timeInSec;
                     avgSpeed = Precision.round(avgSpeed, 3);
                     //avgSpeed = 1.1;
-                    record = new Record(distance1, time, avgSpeed);
+                    record = new Record(distance, time, avgSpeed);
                     DatabaseReference newRecordInUserRef = recordsInUserRef.push();
                     newRecordInUserRef.setValue(record).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -209,7 +193,7 @@ public class SensorActivity extends AppCompatActivity {
                     // We can also chain the two calls together
                     //recordsRef.push().setValueAsync(record);
                     //Záznam pro aktivitu Standings
-                    recordUser = new RecordUser(username, distance1, time, avgSpeed);
+                    recordUser = new RecordUser(username, distance, time, avgSpeed);
 
                     recordsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -314,21 +298,30 @@ public class SensorActivity extends AppCompatActivity {
     }
     private void updateUIValues(Location location){
         currentLocation = location;
-        distance1 = currentLocation.distanceTo(startLocation);
+        tvCurrentLat.setText(String.valueOf(currentLocation.getLatitude()));
+        tvCurrentLon.setText(String.valueOf(currentLocation.getLongitude()));
+        //distance = currentLocation.distanceTo(startLocation);
+        //distance = distance1/1000;
+        //distance = Precision.round(distance1, 3);
+        newDistance = distance;
         float[] results = new float[1];
         Location.distanceBetween(startLocation.getLatitude(), startLocation.getLongitude(),
                 currentLocation.getLatitude(), currentLocation.getLongitude(), results);
-        distance2 = results[0];
-        tvCurrentLat.setText(String.valueOf(currentLocation.getLatitude()));
-        tvCurrentLon.setText(String.valueOf(currentLocation.getLongitude()));
-        distance1 = distance1/1000;
-        distance2 = distance2/1000;
+        distance = results[0];
+        if(distance < newDistance){
+            startLocation = currentLocation;
+            float[] results2 = new float[1];
+            Location.distanceBetween(startLocation.getLatitude(), startLocation.getLongitude(),
+                    currentLocation.getLatitude(), currentLocation.getLongitude(), results2);
+            newDistance = results2[0];
+            distance = distance + newDistance;
+        }
+        distance = distance /1000;
         //zaokrouhlení na 3 des. místa
-        distance1 = Precision.round(distance1, 3);
-        distance2 = Precision.round(distance2, 3);
-        String distance = String.valueOf(distance1);
-        tvDistance1.setText(distance + " km");
-        tvDistance2.setText(String.valueOf(distance2) + " km");
+        distance = Precision.round(distance, 3);
+
+        String distanceStr = String.valueOf(distance) + " km";
+        tvDistance.setText(distanceStr);
     }
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override

@@ -46,6 +46,7 @@ import java.util.List;
 
 public class SensorActivity extends AppCompatActivity {
     private static final int PERMISSIONS_FINE_LOCATION = 99;
+    private static final int PERMISSIONS_COARSE_LOCATION = 98;
     private static final int DEFAULT_UPDATE_INTERVAL = 30;
     private static final int FASTEST_UPDATE_INTERVAL = 5;
 
@@ -180,7 +181,7 @@ public class SensorActivity extends AppCompatActivity {
                     time = new Time(min, sec, millisec);
                     int timeInSec = (millisec / 1000) + sec + (min * 60);
                     double avgSpeed = (distance * 1000) / timeInSec;
-                    avgSpeed = Precision.round(avgSpeed, 3);
+                    avgSpeed = Precision.round(avgSpeed, 2);
                     //avgSpeed = 1.1;
                     record = new Record(distance, time, avgSpeed);
                     DatabaseReference newRecordInUserRef = recordsInUserRef.push();
@@ -190,6 +191,8 @@ public class SensorActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Záznam byl úspěšně nahrán do databáze", Toast.LENGTH_LONG).show();
                         }
                     });
+                    String key = newRecordInUserRef.getKey();
+                    newRecordInUserRef.child("id").setValue(key);
                     // We can also chain the two calls together
                     //recordsRef.push().setValueAsync(record);
                     //Záznam pro aktivitu Standings
@@ -201,7 +204,7 @@ public class SensorActivity extends AppCompatActivity {
                             for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                                 RecordUser recordUserLoc = snapshot.getValue(RecordUser.class);
                                 //jestliže je rychlost záznamu v databázi MENŠÍ nebo ROVNA, záznam se nahradí novým
-                                if(recordUserLoc.getUsername() != null && recordUserLoc.getUsername().equals(username)
+                                if(recordUserLoc != null && recordUserLoc.getUsername().equals(username)
                                         && recordUserLoc.getSpeed() <= recordUser.getSpeed()){
                                     snapshot.getRef().removeValue();
                                     snapshot.getRef().setValue(recordUser);
@@ -260,7 +263,8 @@ public class SensorActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void getStartLocation(){
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(SensorActivity.this);
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             //user provided the permission
             fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
@@ -273,6 +277,7 @@ public class SensorActivity extends AppCompatActivity {
         }else{
             if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.M){
                 requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_FINE_LOCATION);
+                requestPermissions(new String[] {Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSIONS_COARSE_LOCATION);
             }
         }
     }
@@ -330,6 +335,7 @@ public class SensorActivity extends AppCompatActivity {
 
         switch(requestCode){
             case PERMISSIONS_FINE_LOCATION:
+            case PERMISSIONS_COARSE_LOCATION:
                 if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     getStartLocation();
                 }else{

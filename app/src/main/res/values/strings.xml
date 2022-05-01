@@ -17,6 +17,12 @@
     <string name="o_km">"0.00 km"</string>
     <string name="m">" m"</string>
     <string name="m_s">" m/s"</string>
+    <string name="sprinter1">sprinter1</string>
+    <string name="_1_03_45">1:03:45</string>
+    <string name="_5_26_km">5.26 km</string>
+    <string name="_0_45_s_m">0.45 s/m</string>
+    <string name="forgot_password">Zapomněl/a jste heslo?</string>
+    <string name="standings">1.</string>
 
 
 </resources>

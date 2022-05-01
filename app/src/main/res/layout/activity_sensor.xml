@@ -4,238 +4,175 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
-    tools:context=".MainActivity">
+    android:layout_margin="10dp"
+    tools:context=".SensorActivity">
 
     <TextView
-        android:id="@+id/tv_labellat"
+        android:id="@+id/tv_start_Location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Počáteční poloha"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tv_labellat2"
         android:layout_width="90dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Zěměpisná šířka:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tv_start_Location" />
 
     <TextView
-        android:id="@+id/tv_lat"
+        android:id="@+id/tv_lat2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="27dp"
         android:text="0.00"
-        app:layout_constraintStart_toEndOf="@+id/tv_labellat"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/tv_labellat2"
+        app:layout_constraintTop_toBottomOf="@id/tv_start_Location" />
 
     <TextView
-        android:id="@+id/tv_labellon"
+        android:id="@+id/tv_labellon2"
         android:layout_width="90dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Zeměpisná délka:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_labellat" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_labellat2" />
 
     <TextView
-        android:id="@+id/tv_lon"
+        android:id="@+id/tv_lon2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="0.00"
-        app:layout_constraintStart_toEndOf="@+id/tv_labellon"
-        app:layout_constraintTop_toBottomOf="@+id/tv_lat" />
+        app:layout_constraintStart_toEndOf="@+id/tv_labellon2"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lat2" />
+
+
 
     <TextView
-        android:id="@+id/tv_labelaltitude"
+        android:id="@+id/tv_current_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:text="Současná poloha"
+        app:layout_constraintStart_toEndOf="@id/tv_start_Location"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_labellat_current"
         android:layout_width="90dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Nadmořská výška:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_labellon" />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:text="Zěměpisná šířka:"
+        app:layout_constraintStart_toEndOf="@id/tv_lat2"
+        app:layout_constraintTop_toBottomOf="@id/tv_current_position" />
 
     <TextView
-        android:id="@+id/tv_altitude"
+        android:id="@+id/tv_lat_current"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="27dp"
         android:text="0.00"
-        app:layout_constraintStart_toEndOf="@+id/tv_labelaltitude"
-        app:layout_constraintTop_toTopOf="@+id/tv_labelaltitude" />
+        app:layout_constraintStart_toEndOf="@+id/tv_labellat_current"
+        app:layout_constraintTop_toBottomOf="@id/tv_start_Location" />
 
     <TextView
-        android:id="@+id/tv_labelaccuracy"
+        android:id="@+id/tv_labellon_current"
         android:layout_width="90dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
-        android:text="Přesnost:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_labelaltitude" />
+        android:text="Zeměpisná délka:"
+        app:layout_constraintStart_toEndOf="@id/tv_lon2"
+        app:layout_constraintTop_toBottomOf="@+id/tv_labellat2" />
 
     <TextView
-        android:id="@+id/tv_accuracy"
+        android:id="@+id/tv_lon_current"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="0.00"
-        app:layout_constraintStart_toEndOf="@+id/tv_labelaccuracy"
-        app:layout_constraintTop_toTopOf="@+id/tv_labelaccuracy" />
+        app:layout_constraintStart_toEndOf="@+id/tv_labellon_current"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lat2" />
 
     <TextView
-        android:id="@+id/tv_labelspeed"
-        android:layout_width="90dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Rychlost:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_labelaccuracy" />
-
-    <TextView
-        android:id="@+id/tv_speed"
+        android:id="@+id/tv_lbl_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="Čas:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_distance_lbl" />
+
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintStart_toEndOf="@+id/tv_lbl_time"
+        app:layout_constraintTop_toBottomOf="@+id/tv_distance_lbl" />
+
+    <TextView
+        android:id="@+id/tv_distance_lbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="Vzdálenost od počátku:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lon2" />
+
+    <TextView
+        android:id="@+id/tv_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
         android:text="0.00"
-        app:layout_constraintStart_toEndOf="@+id/tv_labelspeed"
-        app:layout_constraintTop_toTopOf="@+id/tv_labelspeed" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.023"
+        app:layout_constraintStart_toEndOf="@+id/tv_distance_lbl"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lon2" />
 
-    <TextView
-        android:id="@+id/tv_labelsensor"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Senzor:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sw_gps" />
 
-    <TextView
-        android:id="@+id/tv_sensor"
+    <ImageButton
+        android:id="@+id/imgbtn_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vysílače a Wi-Fi"
-        app:layout_constraintStart_toEndOf="@+id/tv_labelsensor"
-        app:layout_constraintTop_toTopOf="@+id/tv_labelsensor" />
-
-    <TextView
-        android:id="@+id/tv_labelupdates"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="Updaty:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sw_locationsupdates" />
-
-    <TextView
-        android:id="@+id/tv_updates"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Vypnuto"
-        app:layout_constraintStart_toEndOf="@+id/tv_labelupdates"
-        app:layout_constraintTop_toTopOf="@+id/tv_labelupdates" />
-
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/sw_locationsupdates"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:checked="true"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="Start"
+        android:src="@drawable/ic_baseline_play_arrow_24"
+        android:minWidth="48dp"
         android:minHeight="48dp"
-        android:text="Updatovat polohu"
-        android:textColorHighlight="#FF5722"
-        android:textColorLink="#FF9800"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent" />
+        <!--app:layout_constraintTop_toBottomOf="@+id/tv_lon2"-->
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/sw_gps"
+    <ImageButton
+        android:id="@+id/imgbtn_stop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="Stop"
+        android:src="@drawable/ic_baseline_stop_24"
+        android:minWidth="48dp"
         android:minHeight="48dp"
-        android:text="GPS/Šetřit baterku"
-        android:textColorHighlight="#FF5722"
-        android:textColorLink="#FF9800"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.58"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_labelupdates" />
+        app:layout_constraintStart_toEndOf="@+id/imgbtn_start" />
 
-    <TextView
-        android:id="@+id/tv_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/tv_lbladdress"
-        app:layout_constraintTop_toTopOf="@+id/tv_lbladdress" />
-
-    <TextView
-        android:id="@+id/tv_lbladdress"
-        android:layout_width="90dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Adresa:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_labelspeed" />
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="409dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_address" />
-
-    <TextView
-        android:id="@+id/tv_lbl_waypoints"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Ukazatelé:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_sensor" />
-    <TextView
-        android:id="@+id/tv_countOfWaypoints"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        app:layout_constraintStart_toEndOf="@+id/tv_lbl_waypoints"
-        app:layout_constraintTop_toTopOf="@+id/tv_lbl_waypoints" />
-
-    <Button
-        android:id="@+id/btn_measure_distance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Měřit vzdálenost od počátku"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_lbl_waypoints" />
-    <Button
-        android:id="@+id/btn_new_waypoint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Uložit nový ukazatel"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_measure_distance" />
-    <Button
-        android:id="@+id/btn_waypoints_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Seznam ukazatelů"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_new_waypoint" />
-
-    <Button
-        android:id="@+id/btn_showmap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mapa"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_waypoints_list" />
-
-
+    <!--app:layout_constraintTop_toBottomOf="@+id/tv_lon2"-->
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,6 +34,7 @@ public class StandingsAdapter extends RecyclerView.Adapter<StandingsAdapter.View
         /*int min = list.get(position).getTime().getMin();
         int sec = list.get(position).getTime().getSec();
         int millisec = list.get(position).getTime().getMillisec();*/
+        holder.tvStandings.setText(String.valueOf(position + 1) + ".");
         holder.tvUsername.setText(list.get(position).getUsername());
         holder.tvTime.setText(String.format("%02d", list.get(position).getTime().getMin()) + ":" +
                 String.format("%02d", list.get(position).getTime().getSec()) + ":" +
@@ -51,9 +52,10 @@ public class StandingsAdapter extends RecyclerView.Adapter<StandingsAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvUsername, tvTime, tvDistance, tvAvgSpeed;
+        TextView tvStandings, tvUsername, tvTime, tvDistance, tvAvgSpeed;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            tvStandings = itemView.findViewById(R.id.tv_st_standings);
             tvUsername = itemView.findViewById(R.id.tv_st_username);
             tvTime = itemView.findViewById(R.id.tv_st_time);
             tvDistance = itemView.findViewById(R.id.tv_st_distance);

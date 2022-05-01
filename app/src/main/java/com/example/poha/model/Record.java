@@ -1,6 +1,7 @@
 package com.example.poha.model;
 
 public class Record {
+    String id;
     private double distance;
     private double speed;
     private Time time;
@@ -36,5 +37,13 @@ public class Record {
 
     public void setSpeed(double speed) {
         this.speed = speed;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

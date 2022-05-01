@@ -13,7 +13,7 @@
         android:scaleX="3"
         android:scaleY="3"
         android:text="@string/registrace"
-        android:textColor="@color/purple_500"
+        android:textColor="@color/orange"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

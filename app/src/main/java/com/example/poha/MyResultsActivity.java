@@ -49,11 +49,11 @@ public class MyResultsActivity extends AppCompatActivity {
         rootNode = FirebaseDatabase.getInstance();
         userID = user.getUid();
         recordsRef = rootNode.getReference("Users/" + userID + "/Records");
+        recordsQuery = recordsRef.orderByChild("speed");
 
         list = new ArrayList<>();
-        adapter = new MyResultsAdapter(list);
+        adapter = new MyResultsAdapter(list, recordsQuery);
         recyclerView.setAdapter(adapter);
-        recordsQuery = recordsRef.orderByChild("speed");
 
         recordsQuery.addValueEventListener(new ValueEventListener() {
             @Override
